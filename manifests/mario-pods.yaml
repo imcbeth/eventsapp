@@ -10,3 +10,16 @@ spec:
     image: pengbai/docker-supermario
     ports:
     - containerPort: 8080
+---
+apiVersion: v1
+kind: service
+metadata: 
+  name: supermario-service
+spec:
+  selector:
+    app: mario
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
