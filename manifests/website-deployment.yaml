@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-website
+  labels:
+    app: events-website
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events-website
+      ver: v2.0
+  template:
+    metadata:
+      labels:
+        app: events-website
+        ver: v2.0
+    spec:
+      containers:
+      - image: imcbeth/events-website:v2.0
+        name: events-site
+        ports:
+        - containerPort: 8082
+      imagePullSecrets:
+      - name: docker-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-website-service
+  namespace: default
+spec:
+  selector:
+    app: events-website
+    ver: v2.0
+  ports:
+  - protocol: TCP
+    port: 8081
+    targetPort: 8082
+  type: LoadBalancer

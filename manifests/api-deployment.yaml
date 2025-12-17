@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-api
+  labels:
+    app: events-api
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events-api
+      ver: v1.0
+  template:
+    metadata:
+      labels:
+        app: events-api
+        ver: v1.0
+    spec:
+      containers:
+      - image: imcbeth/events-api:v1.0
+        name: events-api
+        ports:
+        - containerPort: 8082
+      imagePullSecrets:
+      - name: docker-registry-secret
