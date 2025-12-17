@@ -10,15 +10,15 @@ spec:
   selector:
     matchLabels:
       app: events-website
-      ver: v2.0
+      ver: v3.0
   template:
     metadata:
       labels:
         app: events-website
-        ver: v2.0
+        ver: v3.0
     spec:
       containers:
-      - image: imcbeth/events-website:v2.0
+      - image: imcbeth/events-website:v3.0
         name: events-site
         ports:
         - containerPort: 8082
@@ -35,7 +35,7 @@ metadata:
 spec:
   selector:
     app: events-website
-    ver: v2.0
+    ver: v3.0
   ports:
   - protocol: TCP
     port: 80
