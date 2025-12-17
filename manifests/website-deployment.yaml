@@ -28,7 +28,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: events-website-service
+  labels:
+    app: events-web-svc
+  name: events-web-svc
   namespace: default
 spec:
   selector:
@@ -36,6 +38,6 @@ spec:
     ver: v2.0
   ports:
   - protocol: TCP
-    port: 8088
-    targetPort: 8082
-  type: ClusterIP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer

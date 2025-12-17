@@ -24,3 +24,20 @@ spec:
         - containerPort: 8082
       imagePullSecrets:
       - name: docker-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: events-api-svc
+  name: events-api-svc
+  namespace: default
+spec:
+  selector:
+    app: events-api
+    ver: v1.0
+  ports:
+  - protocol: TCP
+    port: 8082
+    targetPort: 8082
+  type: ClusterIP
