@@ -4,9 +4,10 @@ metadata:
   name: events-website
   labels:
     app: events-website
+    ver: v3.0
   namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: events-website
