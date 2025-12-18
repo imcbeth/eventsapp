@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init-job
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: db-init-container
+        image: imcbeth/events-job:v1.0
+        env:
+        - name: DBHOST
+          value: "my-mariadb"
+        - name: DBUSER
+          value: "root"
+        - name: DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-mariadb
+              key: mariadb-root-password
+      restartPolicy: Never
+      imagePullSecrets:
+      - name: docker-registry-secret
+  backoffLimit: 4

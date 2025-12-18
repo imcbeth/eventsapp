@@ -20,6 +20,18 @@ spec:
       containers:
       - image: imcbeth/events-api:v1.0
         name: events-api
+        env:
+        - name: DBHOST
+          value: "my-mariadb"
+        - name: DBUSER
+          value: "root"
+        - name: DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-mariadb
+              key: mariadb-root-password
+        - name: DBDATABASE
+          value: "events_db" 
         ports:
         - containerPort: 8082
       imagePullSecrets:
