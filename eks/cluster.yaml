@@ -7,9 +7,24 @@ metadata:
   version: "1.34" 
 
 managedNodeGroups:
+  - name: spot-nodes-mixed # A single group for diversified Spot instances
+    instanceTypes: ["t2.medium", "t2.large", "t2.xlarge"] # Diversified instance types [ "m5a.large", "m6a.large"]
+    minSize: 2
+    maxSize: 10
+    desiredCapacity: 2
+    spot: true # Enables Spot instances for this group
+    instancesDistribution:
+      # Distribute across multiple pools for better availability
+      spotInstancePools: 3 # Number of pools to use
+      onDemandBaseCapacity: 0 # No On-Demand base capacity in this pure Spot group
+      onDemandPercentageAboveBaseCapacity: 0 # No On-Demand above base
+    labels: { role: "spot-workers" } # Optional labels for scheduling
+    tags:
+      nodegroup-type: "spot" # Optional tags for filtering
+
   - name: standard-workers
     instanceType: t2.medium
-    desiredCapacity: 2
+    desiredCapacity: 1
 
 iam:
   withOIDC: true
